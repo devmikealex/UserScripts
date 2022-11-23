@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         YouTube
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.12
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/watch?v=*
@@ -11,14 +11,24 @@
 
 (function () {
     'use strict'
-    waitForQuerySelector('yt-formatted-string.ytd-video-primary-info-renderer:nth-child(1)').then(
+
+    waitForQuerySelector('h1.ytd-watch-metadata').then(
         (elm) => {
             elm.style.color = 'red'
+            elm.style.lineHeight = '1em'
         }
     )
-    waitForQuerySelector('#info-text').then(
+    /* waitForQuerySelector('#info-text').then(
         (elm) => {
             document.querySelector(".super-title").appendChild(elm);
+        }
+    ) */
+    waitForQuerySelector('#super-title').then(
+        (elm) => {
+            // elm.style.display='none'
+            document.querySelector("h1.ytd-watch-metadata").after(elm)
+            document.querySelector("#clarify-box").style.display='none'
+            document.title = `*${document.title}`
         }
     )
 })()
